@@ -11,6 +11,7 @@ You can download the datasets mentioned in the paper at https://github.com/laigu
 We give the examples to run different datasets in ele.sh, traffic.sh, solar.sh and stoke.sh.
 
 ### Environment 
-
-Python 3.7 and Pytorch 1.2
-
+Create Conda Environment with Python 3.7
+Install compatible PyTorch from https://pytorch.org/
+Create folder data and clone the dataset from https://github.com/laiguokun/multivariate-time-series-data
+Run any sh file on cmd or Power shell (windows)
