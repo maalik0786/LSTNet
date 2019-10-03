@@ -1,17 +1,19 @@
 import math
-import torch.optim as optim
+
+import torch
+
 
 class Optim(object):
 
-    def _makeOptimizer(self):
+    def make_optimizer(self):
         if self.method == 'sgd':
-            self.optimizer = optim.SGD(self.params, lr=self.lr)
+            self.optimizer = torch.optim.SGD(self.params, lr=self.lr)
         elif self.method == 'adagrad':
-            self.optimizer = optim.Adagrad(self.params, lr=self.lr)
+            self.optimizer = torch.optim.Adagrad(self.params, lr=self.lr)
         elif self.method == 'adadelta':
-            self.optimizer = optim.Adadelta(self.params, lr=self.lr)
+            self.optimizer = torch.optim.Adadelta(self.params, lr=self.lr)
         elif self.method == 'adam':
-            self.optimizer = optim.Adam(self.params, lr=self.lr)
+            self.optimizer = torch.optim.Adam(self.params, lr=self.lr)
         else:
             raise RuntimeError("Invalid optim method: " + self.method)
 
@@ -24,8 +26,8 @@ class Optim(object):
         self.lr_decay = lr_decay
         self.start_decay_at = start_decay_at
         self.start_decay = False
-
-        self._makeOptimizer()
+        self.optimizer = None
+        self.make_optimizer()
 
     def step(self):
         # Compute gradients norm.
@@ -47,7 +49,7 @@ class Optim(object):
         return grad_norm
 
     # decay learning rate if val perf does not improve or we hit the start_decay_at limit
-    def updateLearningRate(self, ppl, epoch):
+    def update_learning_rate(self, ppl, epoch):
         if self.start_decay_at is not None and epoch >= self.start_decay_at:
             self.start_decay = True
         if self.last_ppl is not None and ppl > self.last_ppl:
@@ -56,9 +58,9 @@ class Optim(object):
         if self.start_decay:
             self.lr = self.lr * self.lr_decay
             print("Decaying learning rate to %g" % self.lr)
-        #only decay for one epoch
+        # only decay for one epoch
         self.start_decay = False
 
         self.last_ppl = ppl
 
-        self._makeOptimizer()
+        self.make_optimizer()
