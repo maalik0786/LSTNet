@@ -14,5 +14,5 @@ We give the examples to run different datasets in ele.sh, traffic.sh, solar.sh a
 ### Environment and Dependencies:
 1.  Create Conda Environment with Python 3.7
 2.  Install compatible PyTorch from https://pytorch.org/
-3.  Create folder data and clone the dataset from https://github.com/laiguokun/multivariate-time-series-data
-4.  Run any sh file on cmd or Power shell (windows)
+3.  Create folder data and clone the dataset
+4.  Run any Bash file on cmd or Power shell (windows)
